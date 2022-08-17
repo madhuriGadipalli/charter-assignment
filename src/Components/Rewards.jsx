@@ -9,12 +9,11 @@ export const RewardsComponent = () => {
   useEffect(() => {
     const endPoint = "http://localhost:3000/transactions";
     axios.get(endPoint).then((response) => {
-      let data = response.data;
-      let monthlyTransactions = Object.keys(data);
+      let data = response?.data;
       let monthly = [];
-      monthlyTransactions.forEach((element) => {
+      for (let element in data) {
         let rewardPoints = 0;
-        data[element].forEach((transaction) => {
+        data[element]?.forEach((transaction) => {
           let price = transaction.price;
           if (price >= 50) {
             rewardPoints += price - 50;
@@ -24,25 +23,16 @@ export const RewardsComponent = () => {
           }
         });
         monthly.push({ rewards: rewardPoints, month: element });
-      });
+      }
       updateMonthlyRewards(monthly);
     });
   }, []);
 
   return (
     <>
-      {/* {monthlyRewards?.map((item) => (
-        <div>{`${item.month}- ${item.rewards}`}</div>
-      ))} */}
-
-      {/* {Object.keys(monthlyRewards).map((element) => {
-        <div>
-          {element}- {monthlyRewards[element]}
-        </div>;
-      })} */}
-      <header className="title">Customer Rewards</header>
+      <header className="title">{`Customer Rewards`}</header>
       <div className="yearly-rewards">
-        <span className="yearly-rewards-title">Yearly Rewards :</span>
+        <span className="yearly-rewards-title">{`Yearly Rewards :`}</span>
         {monthlyRewards?.length &&
           monthlyRewards.reduce((acc, obj) => {
             return acc + obj.rewards;
@@ -55,8 +45,8 @@ export const RewardsComponent = () => {
             <th>{`Rewards`}</th>
           </tr>
         </thead>
-        {monthlyRewards?.map((item) => (
-          <tbody>
+        {monthlyRewards?.map((item, index) => (
+          <tbody key={index}>
             <tr>
               <td>{item.month}</td>
               <td>{item.rewards}</td>
