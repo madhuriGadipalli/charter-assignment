@@ -1,0 +1,12 @@
+.title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.yearly-rewards {
+  padding: 1rem 0.2rem;
+}
+.yearly-rewards-title {
+  font-weight: 700;
+}
